@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class FlightReservationSystem {
+
+    // Array to store available flights and their seats
+    private static String[][] flights = {
+        {"FL123", "New Delhi", "Bhatinda","08/11/2024","₹2,397", "5"},  // Flight with 5 seats
+        {"FL456", "Jaipur", "Mumbai","07/12/2024","₹9,106", "3"},       // Flight with 3 seats
+        {"FL113", "Kolkata", "Chennai","14/11/2024","₹6,658", "4"},     // Flight with 4 seats
+        {"FL256", "Sri Nagar", "Ahmedabad","25/12/2024","₹11043", "5"}, // Flight with 5 seats
+        {"FL123", "Goa", "Trivendrum","08/12/2024","₹7822", "7"},       // Flight with 7 seats
+        {"FL456", "Hyderabad", "Pune","27/12/2024","₹3,999", "3"}       // Flight with 3 seats
+    };
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+        System.out.println("▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓");
+        System.out.println("\n-----º----º-----º-----º-----º----º--Welcome to the Simple Flight Reservation System--º-----º-----º------º-----º------º------º-------");
+
+        while (running) {
+            
+            System.out.println(" 1. View Flights »»»");
+            System.out.println(" 2. Reserve a Seat »»»");
+            System.out.println(" 3. Exit »»»");
+            System.out.print(" Choose an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (option) {
+                case 1 -> viewFlights();
+                case 2 -> reserveSeat(scanner);
+                case 3 -> {
+                    running = false;
+                    System.out.println("---------------------------------------------------------THANKS FOR VISITING US--------------------------------------------------------");
+                    System.out.println("▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓");}
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+        scanner.close();
+    }
+
+    private static void viewFlights() {
+        System.out.println("\nAvailable Flights:");
+        System.out.println("------------------------------------------");
+        for (String[] flight : flights) {
+            System.out.println("Flight Number: " + flight[0] + "\n   From: " + flight[1] + "\n    To: " + flight[2] +"\n   Date: " + flight[3] + "\n   Price: " + flight[4] + "\n   Seats Available: " + flight[5]);
+            System.out.println("------------------------------------------");
+        }
+    }
+
+    private static void reserveSeat(Scanner scanner) {
+        System.out.print("Enter flight number to reserve: ");
+        String flightNumber = scanner.nextLine();
+        boolean found = false;
+
+        for (String[] flight : flights) {
+            if (flight[0].equalsIgnoreCase(flightNumber)) {
+                found = true;
+                int availableSeats = Integer.parseInt(flight[5]);
+
+                if (availableSeats > 0) {
+                    flight[5] = String.valueOf(availableSeats - 1);
+                    System.out.println("Seat reserved successfully on flight " + flightNumber + ". Seats remaining: " + flight[5]);
+                } else {
+                    System.out.println("Sorry, no seats available on this flight.");
+                }
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Flight not found. Please check the flight number and try again.");
+        }
+    }
+    
+}
